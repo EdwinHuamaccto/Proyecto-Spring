@@ -24,7 +24,15 @@ public class Tipo {
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "tipo")
-	private List<ImporteParcial> importes;
+	private List<LibroDiario> listaLibroD;
+
+	public List<LibroDiario> getListaLibroD() {
+		return listaLibroD;
+	}
+
+	public void setListaLibroD(List<LibroDiario> listaLibroD) {
+		this.listaLibroD = listaLibroD;
+	}
 
 	public Integer getCodtipo() {
 		return codtipo;
@@ -42,11 +50,5 @@ public class Tipo {
 		this.descripcion = descripcion;
 	}
 
-	public List<ImporteParcial> getImportes() {
-		return importes;
-	}
 
-	public void setImportes(List<ImporteParcial> importes) {
-		this.importes = importes;
-	}
 }
