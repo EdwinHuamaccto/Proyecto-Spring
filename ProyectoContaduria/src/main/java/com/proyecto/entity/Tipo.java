@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tb_tipo")
 public class Tipo {
@@ -20,6 +22,7 @@ public class Tipo {
 	@Column(name = "descripcion")
 	private String descripcion;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "tipo")
 	private List<ImporteParcial> importes;
 

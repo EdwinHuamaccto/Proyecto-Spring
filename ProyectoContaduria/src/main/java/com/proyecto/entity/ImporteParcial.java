@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name="tb_importe_parcial")
@@ -32,6 +34,7 @@ public class ImporteParcial {
 	@JoinColumn(name = "cod_detalle")
 	private Detalle detalle;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "importe")
 	private List<LibroDiario> listaLibroD;
 
