@@ -4,5 +4,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("/contador")
 public class ContaduriaController {
-
+	
 }
