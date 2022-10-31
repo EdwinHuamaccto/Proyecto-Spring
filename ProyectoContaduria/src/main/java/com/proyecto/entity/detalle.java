@@ -8,14 +8,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tb_tipo")
-public class tipo {
+@Table(name = "tb_detalle")
+public class detalle {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "cod_tipo")
-	private Integer codtipo;
-	@Column(name = "descripcion")
-	private String descripcion;
-	
+	@Column(name = "cod_detalle")
+	private Integer coddetalle;
+	@Column(name = "detalle")
+	private String detalle;
+	@Column(name = "monto")
+	private double monto;
 	//tiene un enlace con tb_importe_parcial
 }
