@@ -1,0 +1,116 @@
+/*estilos globales*/
+img{
+    max-width: 100%;
+}
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+}
+iframe{
+    display: block;
+}
+/*estilos de login*/
+.body_login{
+    background: rgb(14, 76, 117);
+}
+.contenedor_login{
+    width: 23rem;
+    margin: auto;
+    margin-top: 6rem;
+    border: 2px solid rgb(50, 130, 181);
+    border-radius: 5px;
+    background: rgb(50, 130, 181);
+    color: white;
+    box-shadow: 3px 3px 3px 3px rgb(18, 68, 105);
+}
+.form_login{
+    margin: 8px 3rem;
+    padding: 8px 2.5rem;
+}
+
+.contenedor_login h1{
+    text-align: center;
+    padding: 2rem;
+}
+.boton_login{
+  width: 17.5rem;
+  height: 2.5rem;
+  margin: 2rem 3rem;
+  background: rgb(187, 225, 248);
+  border: 0px;
+}
+.opciones_login a{
+ display: block;
+ color: rgb(154, 205, 250);
+ text-align: center;
+}
+.opciones_login{
+    margin-bottom: 2rem;
+}
+/*estilos Index*/
+.contenedor_index{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+
+    grid-auto-rows: minmax(100px, auto);
+}
+.nav_index{
+    grid-column: 1;
+    display: grid;
+    text-align: center;
+   place-items: center;
+   background: rgb(0, 72, 90);
+ 
+}
+.nav_index a{
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+
+}
+.nav_index a:hover{
+    color: black;
+    transition: 0.5s;
+}
+.ver_index{
+grid-column: 2/8;
+
+}
+.ver_index iframe{
+    width: 100%;
+    height: 100vh;  
+}
+.select_empresa{
+    width: 80%;
+    height: 2rem;
+}
+
+.contenedor{
+    width: 100%;
+}
+.sub-conte{
+    display: none;
+    background: rgb(17, 71, 109);
+    border: 2px solid rgb(17, 71, 109);
+    text-align: center;
+    align-items: center;
+}
+.sub-conte div {
+width: 100%;
+padding: 2rem 4rem;
+border-bottom: 3px solid rgb(0, 58, 99);
+
+}
+.contenedor:hover .sub-conte{
+   display: grid;
+   position: absolute;
+   grid-template-columns: repeat(1,1fr);
+   margin-left: 14.3%;
+   margin-top: -4rem;
+   
+}
+/*Tabla de Insercion Libro diario*/
+
+
+
