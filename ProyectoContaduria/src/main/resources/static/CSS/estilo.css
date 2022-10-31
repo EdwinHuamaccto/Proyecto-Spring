@@ -112,5 +112,54 @@ border-bottom: 3px solid rgb(0, 58, 99);
 }
 /*Tabla de Insercion Libro diario*/
 
+.cuerpo-diario{
+    width: 80%;
+    margin: 2rem auto;
+}
 
-
+.formulario-diario{
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+}
+.formulario-1{
+    display: grid;
+    padding: 1rem;
+}
+.formulario-1 .sele{
+    display: grid;
+ 
+}
+.radio-box{
+    display: flex;
+        justify-content: space-around;
+}
+.formulario-2{
+  background: #000;
+}
+.sepa{
+    padding: 8px 0;
+}
+.botones{
+    display: flex;
+    justify-content: space-around;
+}
+.boton-style-1{
+    width: 40%;
+}
+/*Listar*/
+.cuerpo-listar{
+    display: grid;
+}
+.listar{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+}
+.listar div{
+    border: 1px solid black;
+}
+.separador{
+   
+    border-left:1px solid black;
+ 
+}
