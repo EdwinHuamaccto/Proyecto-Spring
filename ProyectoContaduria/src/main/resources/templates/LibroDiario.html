@@ -9,7 +9,7 @@
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-<link rel="stylesheet" href="/CSS/estilo.css">
+<link rel="stylesheet" th:href="@{/CSS/estilo.css}">
 
 <body>
     <div class="cuerpo-diario">
@@ -26,9 +26,12 @@
                         <input type="text" placeholder="Detalle">
                     </div>
                     <div class="radio-box sepa">
-                        <div><input type="radio" checked name="tipo"><label for="">debe</label></div>
-                        <div><input type="radio" name="tipo"><label for="">haber</label></div>
-
+                         <select name="" id="">
+                         <option value="">[Selecione un tipo]</option>
+                         <option th:each="row:${tipos}"
+					  	th:utext="${row.descripcion}"
+					  	th:value="${row.codtipo}"
+					  /></select>
                     </div>
                     <div class="botones">
                         <input class="boton-style-1" type="submit">
