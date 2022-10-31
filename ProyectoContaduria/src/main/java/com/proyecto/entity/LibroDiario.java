@@ -27,7 +27,7 @@ public class LibroDiario {
 	private ImporteParcial importe;
 	@ManyToOne
 	@JoinColumn(name = "cod_emp")
-	private Empleado empleado;
+	private Empresa empresa;
 	
 	public int getCodigo() {
 		return codigo;
@@ -46,12 +46,6 @@ public class LibroDiario {
 	}
 	public void setImporte(ImporteParcial importe) {
 		this.importe = importe;
-	}
-	public Empleado getEmpleado() {
-		return empleado;
-	}
-	public void setEmpleado(Empleado empleado) {
-		this.empleado = empleado;
 	}
 			 
 		

@@ -1,10 +1,13 @@
 package com.proyecto.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -18,5 +21,39 @@ public class Detalle {
 	private String detalle;
 	@Column(name = "monto")
 	private double monto;
-	//tiene un enlace con tb_importe_parcial
+	
+	@OneToMany(mappedBy = "detalle")
+	private List<Detalle> detalles;
+
+	public Integer getCoddetalle() {
+		return coddetalle;
+	}
+
+	public void setCoddetalle(Integer coddetalle) {
+		this.coddetalle = coddetalle;
+	}
+
+	public String getDetalle() {
+		return detalle;
+	}
+
+	public void setDetalle(String detalle) {
+		this.detalle = detalle;
+	}
+
+	public double getMonto() {
+		return monto;
+	}
+
+	public void setMonto(double monto) {
+		this.monto = monto;
+	}
+
+	public List<Detalle> getDetalles() {
+		return detalles;
+	}
+
+	public void setDetalles(List<Detalle> detalles) {
+		this.detalles = detalles;
+	}
 }
