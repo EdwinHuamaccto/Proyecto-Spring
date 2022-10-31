@@ -47,6 +47,12 @@ public class LibroDiario {
 	public void setImporte(ImporteParcial importe) {
 		this.importe = importe;
 	}
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
 			 
 		
 }

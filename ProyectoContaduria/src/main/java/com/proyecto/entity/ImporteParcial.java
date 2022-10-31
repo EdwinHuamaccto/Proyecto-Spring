@@ -35,4 +35,52 @@ public class ImporteParcial {
 	
 	@OneToMany(mappedBy = "importe")
 	private List<LibroDiario> listaLibroD;
+
+	public Integer getCodigoImporte() {
+		return codigoImporte;
+	}
+
+	public void setCodigoImporte(Integer codigoImporte) {
+		this.codigoImporte = codigoImporte;
+	}
+
+	public String getImporte() {
+		return importe;
+	}
+
+	public void setImporte(String importe) {
+		this.importe = importe;
+	}
+
+	public double getMonto() {
+		return monto;
+	}
+
+	public void setMonto(double monto) {
+		this.monto = monto;
+	}
+
+	public Tipo getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(Tipo tipo) {
+		this.tipo = tipo;
+	}
+
+	public Detalle getDetalle() {
+		return detalle;
+	}
+
+	public void setDetalle(Detalle detalle) {
+		this.detalle = detalle;
+	}
+
+	public List<LibroDiario> getListaLibroD() {
+		return listaLibroD;
+	}
+
+	public void setListaLibroD(List<LibroDiario> listaLibroD) {
+		this.listaLibroD = listaLibroD;
+	}
 }
