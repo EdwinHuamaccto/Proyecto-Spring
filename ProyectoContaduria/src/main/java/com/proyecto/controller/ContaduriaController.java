@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.proyecto.entity.Detalle;
+import com.proyecto.entity.TipoAfecto;
+import com.proyecto.service.CompraService;
 import com.proyecto.service.DetalleService;
+import com.proyecto.service.TipoAfectoService;
 import com.proyecto.service.TipoService;
 
 @Controller
@@ -18,6 +21,22 @@ public class ContaduriaController {
 private TipoService serviceTipo;
 @Autowired
 private DetalleService serviceDetalle;
+
+@Autowired
+private TipoAfectoService servicioAfe;
+
+@Autowired
+private CompraService servicioCom;
+
+
+@RequestMapping("/listaCompra")
+public String lista(Model model) {
+	
+	model.addAttribute("compra", servicioCom.listarCompras());
+	model.addAttribute("tipoAfecto", servicioAfe.listarAfectos());
+	
+	return "compra";
+}
 
 @RequestMapping("/lista")
 public String inicio(Model model) {
