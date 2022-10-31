@@ -120,7 +120,7 @@ border-bottom: 3px solid rgb(0, 58, 99);
 .formulario-diario{
     border: 1px solid black;
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(1,1fr);
 }
 .formulario-1{
     display: grid;
@@ -132,7 +132,10 @@ border-bottom: 3px solid rgb(0, 58, 99);
 }
 .radio-box{
     display: flex;
-        justify-content: space-around;
+      
+}
+.radio-box select{
+  width: 100%;
 }
 .formulario-2{
   background: #000;
