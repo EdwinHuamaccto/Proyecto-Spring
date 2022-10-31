@@ -22,8 +22,7 @@ public class ImporteParcial {
 	private Integer codigoImporte;
 	@Column(name="importe_parcial")
 	private String importe;
-	@Column(name="monto")
-	private double monto;
+
 
     @ManyToOne
 	@JoinColumn(name = "cod_tipo")
@@ -52,13 +51,6 @@ public class ImporteParcial {
 		this.importe = importe;
 	}
 
-	public double getMonto() {
-		return monto;
-	}
-
-	public void setMonto(double monto) {
-		this.monto = monto;
-	}
 
 	public Tipo getTipo() {
 		return tipo;
