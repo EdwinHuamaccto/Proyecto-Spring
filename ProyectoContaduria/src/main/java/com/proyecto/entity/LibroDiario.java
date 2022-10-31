@@ -21,38 +21,22 @@ public class LibroDiario {
 	private int codigo;
 	@Column(name="fecha")
 	private Date fecha;
-			  
+	@Column(name="importe_parcial")
+	private String importe;
+	
+    @ManyToOne
+	@JoinColumn(name = "cod_tipo")
+	private Tipo tipo;
+   
 	@ManyToOne
-	@JoinColumn(name = "cod_imp_par")
-	private ImporteParcial importe;
+	@JoinColumn(name = "cod_detalle")
+	private Detalle detalle;
+	
 	@ManyToOne
 	@JoinColumn(name = "cod_emp")
 	private Empresa empresa;
 	
-	public int getCodigo() {
-		return codigo;
-	}
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
-	}
-	public Date getFecha() {
-		return fecha;
-	}
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
-	}
-	public ImporteParcial getImporte() {
-		return importe;
-	}
-	public void setImporte(ImporteParcial importe) {
-		this.importe = importe;
-	}
-	public Empresa getEmpresa() {
-		return empresa;
-	}
-	public void setEmpresa(Empresa empresa) {
-		this.empresa = empresa;
-	}
+
 			 
 		
 }

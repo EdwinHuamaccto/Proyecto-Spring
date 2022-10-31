@@ -30,26 +30,18 @@ cod_detalle int primary key auto_increment,
 detalle varchar(250) not null,
 monto decimal
 );
-create table tb_importe_parcial(
-cod_imp_par int primary key auto_increment,
-cod_tipo INT NOT NULL,
-cod_detalle int,
-importe_parcial varchar(250) not null,
-monto decimal,
-FOREIGN KEY (cod_tipo)REFERENCES tb_tipo (cod_tipo),
-foreign key (cod_detalle) references tb_detalle(cod_detalle)
-);
+
 CREATE TABLE tb_libro_diario (
     cod_LDiario INT PRIMARY KEY AUTO_INCREMENT,
-    cod_imp_par INT NOT NULL,
-    mondo_diario DECIMAL,
+    cod_tipo INT NOT NULL,
+	cod_detalle int,
+    importe_parcial varchar(200) NOT NULL,
     fecha date,
     cod_emp INT NOT NULL,
-    FOREIGN KEY (cod_imp_par)REFERENCES tb_importe_parcial (cod_imp_par),
-    FOREIGN KEY (cod_emp)REFERENCES tb_empresa (cod_emp)
+    FOREIGN KEY (cod_tipo)REFERENCES tb_tipo (cod_tipo),
+    FOREIGN KEY (cod_emp)REFERENCES tb_empresa (cod_emp),
+    foreign key (cod_detalle) references tb_detalle(cod_detalle)
 );
-
-
 -- Movimiento tributario
 create table tb_tipo_afecto(
 cod_tipo_afecto int primary key auto_increment,
