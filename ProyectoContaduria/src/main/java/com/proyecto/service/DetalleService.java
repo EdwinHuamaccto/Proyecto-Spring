@@ -13,19 +13,7 @@ public class DetalleService {
 	@Autowired
 	private DetalleRepository repo;
 	
-	public void registrar(Detalle bean) {
-		repo.save(bean);
-	}
-	
-	public void eliminar(int cod) {
-		repo.deleteById(cod);
-	}
-	
 	public List<Detalle> listar(){
 		return repo.findAll();
-	}
-	
-	public Detalle buscar(int cod) {
-		return repo.findById(cod).orElse(null);
 	}
 }

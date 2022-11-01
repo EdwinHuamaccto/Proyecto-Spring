@@ -16,19 +16,23 @@
         <h1>Libro Diario</h1>
         <div class="formulario-diario">
             <div class="formulario-1">
-                <form action="" method="post">
+                <form action="/LibroDiario/registroDetalle" method="post">
                     <div class="sele sepa">
                         <p>Fecha:</p>
-                        <input type="date" placeholder="">
+                        <input type="date" name="fecha">
                     </div>
-                    <div class="sele sepa">
-                        <p>Detalle:</p>
-                        <input type="text" placeholder="Detalle">
+                    <div class="radio-box sepa">
+                         <select name="detalle">
+                         <option value="">[Selecione un detalle]</option>
+                         <option th:each="frijol:${detalles}"
+					  	th:utext="${frijol.detalle}"
+					  	th:value="${frijol.coddetalle}"
+					  /></select>
                     </div>
-                     <div class="sele sepa"><p >Sub-Descripcion</p><input type="text" name="detalle"></div>
+                     <div class="sele sepa"><p >Sub-Descripcion</p><input type="text" name="importe"></div>
                    <div class="sele sepa"><p >Monto:</p><input type="text"  name="monto"></div>
                     <div class="radio-box sepa">
-                         <select name="" id="">
+                         <select name="tipo">
                          <option value="">[Selecione un tipo]</option>
                          <option th:each="row:${tipos}"
 					  	th:utext="${row.descripcion}"

@@ -1,6 +1,6 @@
 package com.proyecto.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,11 +18,13 @@ public class LibroDiario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="cod_LDiario")
-	private int codigo;
+	private Integer codigo;
 	@Column(name="fecha")
 	private Date fecha;
 	@Column(name="importe_parcial")
 	private String importe;
+	@Column(name = "monto")
+	private double monto;
 	
     @ManyToOne
 	@JoinColumn(name = "cod_tipo")
@@ -36,11 +38,11 @@ public class LibroDiario {
 	@JoinColumn(name = "cod_emp")
 	private Empresa empresa;
 
-	public int getCodigo() {
+	public Integer getCodigo() {
 		return codigo;
 	}
 
-	public void setCodigo(int codigo) {
+	public void setCodigo(Integer codigo) {
 		this.codigo = codigo;
 	}
 
@@ -58,6 +60,14 @@ public class LibroDiario {
 
 	public void setImporte(String importe) {
 		this.importe = importe;
+	}
+
+	public double getMonto() {
+		return monto;
+	}
+
+	public void setMonto(double monto) {
+		this.monto = monto;
 	}
 
 	public Tipo getTipo() {
