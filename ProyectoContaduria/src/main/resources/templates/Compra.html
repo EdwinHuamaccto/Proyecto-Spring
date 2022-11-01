@@ -2,18 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Mantenimiento Supervisor</title>
+<title>Mantenimiento Compra y Gastos</title>
 
  	<!-- Bootstrap CSS -->
-    <link th:href="@{/resources/css/bootstrap.min.css}" rel="stylesheet">
-	<link th:href="@{/resources/css/dataTables.bootstrap5.min.css}" rel="stylesheet">  
-	<link th:href="@{/resources/datepicker/bootstrap-datepicker.css}" rel="stylesheet">
-	<link th:href="@{/resources/css/bootstrap-icons.css}" rel="stylesheet">
-	
-	<link href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
-	
-	<link rel="stylesheet" th:href="@{/resources/alertifyjs/css/alertify.css}">
-	<link rel="stylesheet" th:href="@{/resources/alertifyjs/css/alertify.min.css}"> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<link rel="stylesheet" th:href="@{/CSS/estilo.css}">
+<link rel="stylesheet" href="/src/main/resources/static/CSS/estilo.css">
 	
 	
 	
@@ -62,19 +57,19 @@
 <body>
 	<div class="container">
 		
-		<h3 class="text-center">LISTADO DE COMPRA</h3>	  
+		<h3 class="text-center">LISTADO DE SUPERVISORES</h3>	  
 	  	
 	  	
 	  	<!-- Modal PARA REGISTRAR-->
-		<div class="modal fade" id="modalSupervisor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal fade" id="modalCompra" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		  <div class="modal-dialog modal-dialog-centered modal-lg">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h5 class="modal-title" id="staticBackdropLabel">COMPRAS</h5>
+		        <h5 class="modal-title" id="staticBackdropLabel">COMPRA Y GASTOS</h5>
 		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		      </div>
 		      <div class="modal-body">
-		        <form id="formSupervisor" action="actualizar" method="post" class="row g-3">
+		        <form id="formCompra" action="actualizar" method="post" class="row g-3">
 		        
 		         <div class="form-group col-md-4">
 				    <label for="validationCustomUsername" class="form-label fw-bold">AFECTO NACIONAL</label>
@@ -88,7 +83,7 @@
 				    <label for="validationCustomUsername" class="form-label fw-bold">INAF</label>
 				    <div class="input-group has-validation">
 				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-file-person"></i></span>
-				      <input type="text" class="form-control" name="inas" id="idInaf">
+				      <input type="text" class="form-control" name="inaf" id="idInaf">
 				    </div>
 				  </div>
 				  
@@ -101,7 +96,7 @@
 				  </div>
 				  
 				  <div class="form-group col-md-6">
-				    <label for="validationCustomUsername" class="form-label fw-bold">IGV COMPRAS</label>
+				    <label for="validationCustomUsername" class="form-label fw-bold">I.G.V. COMPRAS</label>
 				    <div class="input-group has-validation">
 				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-file-person"></i></span>
 				      <input type="text" class="form-control" name="igv" id="idIgv">
@@ -109,12 +104,13 @@
 				  </div>
 				  
 				  <div class="form-group col-md-6">
-				    <label for="validationCustomUsername" class="form-label fw-bold">PRECIO DE COMPRA</label>
+				    <label for="validationCustomUsername" class="form-label fw-bold">PRECIO DE COMPRAS</label>
 				    <div class="input-group has-validation">
 				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-file-person"></i></span>
 				      <input type="text" class="form-control" name="precio" id="idPrecio">
 				    </div>
 				  </div>
+				  
 				  
 				 
 				  
@@ -130,14 +126,14 @@
 	    <!--fin modal PARA REGISTRAR-->
 
 	    <div class="mt-5">
-	    <table id="tableCompra" class="table table-striped" style="width:100%">
+	    <table id="tableEdificios" class="table table-striped" style="width:100%">
         <thead>
 							   <tr>
 					                <th>AFECTO NACIONAL</th>
 					                <th>INAF</th>
 					                <th>TOTAL V.C.</th>
-					                <th>IGV COMPRAS</th>
-					                <th>PRECIO DE COMPRA</th>
+					                <th>I.G.V. COMPRAS</th>
+					                <th>PRECIO DE COMPRAS</th>
 					                <th></th>
 					            </tr>
 							  </thead>
@@ -145,13 +141,12 @@
 								<tr th:each="row:${compra}">
 							      <td th:text="${row.afecto}"></td>
 							      <td th:text="${row.inaf}"></td>
-							      <td th:text="${row.apellido}"></td>
 							      <td th:text="${row.total_vc}"></td>
 							      <td th:text="${row.igv}"></td>
 							      <td th:text="${row.precio_compra}"></td>
 							      <td>
 							      <button type="button" class="btn btn-primary btn-editar" data-bs-toggle="modal" data-bs-target="#modalCompra">
-							  		Editar
+							  		Editar 
 							  	  </button>
 							      </td>
 							    </tr>  
@@ -219,13 +214,11 @@
 			let cod=$(this).parents("tr").find("td")[0].innerHTML;
 			$.get("buscar?codigo="+cod,function(response){
 				console.log(response);
-				$("#idCodigo").val(response.codigo);
-				$("#idNombre").val(response.nombre);
-				$("#idApellido").val(response.apellido);
-				$("#idDni").val(response.dni);
-				$("#idHijos").val(response.hijos);
-				$("#idSueldo").val(response.sueldo);
-				$("#idSucursal").val(response.sucursal.codigo);
+				$("#idAfecto").val(response.afecto);
+				$("#idInaf").val(response.inaf);
+				$("#idTotal").val(response.total);
+				$("#idIgv").val(response.igv);
+				$("#idPrecio").val(response.precio);
 			})
 			
 		})
@@ -238,3 +231,4 @@
 	
 </body>
 </html>
+
