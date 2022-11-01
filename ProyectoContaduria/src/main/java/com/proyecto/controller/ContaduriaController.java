@@ -1,5 +1,6 @@
 package com.proyecto.controller;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +21,18 @@ import com.proyecto.service.TipoService;
 @RequestMapping("/LibroDiario")
 public class ContaduriaController {
 
-@Autowired
-private TipoService serviceTipo;
-@Autowired
-private DetalleService serviceDetalle;
-@Autowired
-private LibroService serviceLibro;
-
-@RequestMapping("/lista")
+	@Autowired
+	private TipoService serviceTipo;
+	@Autowired
+	private DetalleService serviceDetalle;
+	@Autowired
+	private LibroService serviceLibro;
+	
+	@RequestMapping("/lista")
 	public String inicio(Model model) {
 		model.addAttribute("tipos",serviceTipo.listar());
 	    model.addAttribute("detalles", serviceDetalle.listar());
+	    model.addAttribute("registros", serviceLibro.listar());
 		return "LibroDiario.html";
 	}
 	@RequestMapping("/registroDetalle")
@@ -42,10 +44,9 @@ private LibroService serviceLibro;
 		try {
 			LibroDiario lib=new LibroDiario();
 			lib.setCodigo(0);
-			lib.setFecha(new SimpleDateFormat("yyyy-mm-dd").parse(fecha));
+			lib.setFecha(new SimpleDateFormat("yyyy-MM-dd").parse(fecha));
 			lib.setImporte(importe);
 			lib.setMonto(monto);
-			
 			
 			Tipo tip=new Tipo();
 			tip.setCodtipo(tipo);
@@ -65,6 +66,18 @@ private LibroService serviceLibro;
 		}
 		
 		
+		return "redirect:/LibroDiario/lista";
+	}
+	@RequestMapping("/listarLibro")
+	public String listaLibro(@RequestParam("date") String date,
+							 Model model) {
+		try {
+			model.addAttribute("registro", 
+					serviceLibro.buscarPorFecha(new SimpleDateFormat("yyyy-MM-dd").parse(date)));
+			
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		return "redirect:/LibroDiario/lista";
 	}
 }

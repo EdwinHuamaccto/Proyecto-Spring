@@ -1,5 +1,6 @@
 package com.proyecto.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,9 @@ public class LibroService {
 	
 	public LibroDiario buscar(int cod) {
 		return repo.findById(cod).orElse(null);
+	}
+	
+	public List<LibroDiario> buscarPorFecha(Date date) {
+		return repo.listarLibro(date);
 	}
 }

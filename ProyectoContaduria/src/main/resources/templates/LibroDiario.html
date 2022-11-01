@@ -48,24 +48,26 @@
          
         </div>
         <div class="cuerpo-listar">
-            <form action="">
-                <input type="date">
+            <form action="/LibroDiario/listarLibro">
+                <input type="date" name="date">
                 <input type="submit" value="buscar">
             </form>
-            <div class="listar">
-                <div>
-                    <p>Fecha</p>
-                </div>
-                <div>
-                    <p>Detalle</p>
-                </div>
-                <div>
-                    <p>Tipo</p>
-                </div>
-                <div>
-                    <p>Importe</p>
-                </div>
-            </div>
+            <table border="2" border-collapse="collapse">
+            	<tr>
+            		<td>Empresa</td>
+            		<td >Detalle</td>
+            		<td>Importe Parcial</td>
+            		<td>Monto</td>
+            		<td>Fecha</td>
+            	</tr>
+            	<tr th:each="bean:${registros}">
+            		<td th:text="${bean.empresa.nomempresa}"></td>
+            		<td th:text="${bean.detalle.detalle}"></td>
+            		<td th:text="${bean.importe}"></td>
+            		<td th:text="${bean.monto}"></td>
+            		<td th:text="${bean.fecha}"></td>
+            	</tr>
+            </table>
         </div>
     </div>
 </body>
