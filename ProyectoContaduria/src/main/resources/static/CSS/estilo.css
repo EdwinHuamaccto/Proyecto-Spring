@@ -166,3 +166,33 @@ border-bottom: 3px solid rgb(0, 58, 99);
     border-left:1px solid black;
  
 }
+/* menu */
+
+.menu{
+    display: flex;
+    justify-content: space-around;
+    background: #000;
+}
+.logo{
+    color: white;
+    font-family: arial black;
+}
+.logo span{
+    background: white;
+    color: black;
+}
+.enlaces{
+    display: flex;
+    align-items:center ;
+}
+.enlaces a{
+    margin: 0 1rem;
+    color: white;
+    text-decoration: none;
+    
+}
+.fondo{
+height: 100vh;
+   overflow: hidden;
+   position: fixed;
+}
