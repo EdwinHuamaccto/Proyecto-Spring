@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.proyecto.entity.Detalle;
 import com.proyecto.entity.Empresa;
@@ -36,14 +38,16 @@ public class ContaduriaController {
 		return "LibroDiario.html";
 	}
 	@RequestMapping("/registroDetalle")
-	public String registrarDetalle(@RequestParam("fecha") String fecha,
+	public String registrarDetalle(@RequestParam("codigo") int cod,
+								   @RequestParam("fecha") String fecha,
 								   @RequestParam("detalle") int detalle,
 								   @RequestParam("importe") String importe,
 								   @RequestParam("monto") double monto,
-								   @RequestParam("tipo") int tipo) {
+								   @RequestParam("tipo") int tipo,
+								   RedirectAttributes redirect) {
 		try {
 			LibroDiario lib=new LibroDiario();
-			lib.setCodigo(0);
+			lib.setCodigo(cod);
 			lib.setFecha(new SimpleDateFormat("yyyy-MM-dd").parse(fecha));
 			lib.setImporte(importe);
 			lib.setMonto(monto);
@@ -61,11 +65,15 @@ public class ContaduriaController {
 			lib.setEmpresa(emp);
 			
 			serviceLibro.registrar(lib);
+			
+			if (cod==0) {
+				redirect.addFlashAttribute("MENSAJE", "Registro insertado");
+			} else {
+				redirect.addFlashAttribute("MENSAJE", "Registro actualizado");
+			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		
-		
 		return "redirect:/LibroDiario/lista";
 	}
 	@RequestMapping("/listarLibro")
@@ -78,6 +86,27 @@ public class ContaduriaController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+		return "redirect:/LibroDiario/lista";
+	}
+	
+	@RequestMapping("/buscar")
+	@ResponseBody
+	public LibroDiario editar(@RequestParam("codigo") int cod) {
+		LibroDiario obj=serviceLibro.buscar(cod);
+		return obj;
+	}
+	
+	
+	@RequestMapping("/eliminar")
+	public String eliminar(@RequestParam("codigo") int cod,RedirectAttributes redirect) {
+		try {
+			serviceLibro.eliminar(cod);
+			redirect.addFlashAttribute("MENSAJE","Medicamento eliminado");
+		} catch (Exception e) {
+			redirect.addFlashAttribute("MENSAJE","Error en la eliminación");
+			e.printStackTrace();
+		}
+		
 		return "redirect:/LibroDiario/lista";
 	}
 }

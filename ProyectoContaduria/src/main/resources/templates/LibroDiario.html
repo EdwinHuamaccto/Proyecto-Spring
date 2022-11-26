@@ -6,70 +6,306 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Libro Diario</title>
+ 	<!-- Bootstrap CSS -->
+    <link th:href="@{/resources/CSS/bootstrap.min.css}" rel="stylesheet">
+	<link th:href="@{/resources/CSS/dataTables.bootstrap5.min.css}" rel="stylesheet">  
+	<link th:href="@{/resources/datepicker/bootstrap-datepicker.css}" rel="stylesheet">
+	<link th:href="@{/resources/CSS/bootstrap-icons.css}" rel="stylesheet">
+	
+	<link href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+	
+	<link rel="stylesheet" th:href="@{/resources/alertifyjs/css/alertify.css}">
+	<link rel="stylesheet" th:href="@{/resources/alertifyjs/css/alertify.min.css}">
+	
+	<link rel="stylesheet" th:href="@{/resources/CSS/estilo.css}">	
+	<style>
+		.modal-header{
+		color:#fff;
+		background: #428bca;
+		display: flex;
+  		justify-content: center;  		
+		}
+		.help-block {
+		  		color: red;
+		}
+		.form-group.has-error .form-control-label {
+		  color: red;
+		}
+		.form-group.has-error .form-control {
+		  border: 1px solid red;
+		  box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
+		}
+		.alertify .ajs-dialog {
+		    top: 50%;
+		    transform: translateY(-50%);
+		    margin: auto;
+		}
+		.ajs-header{
+			background-color: #286090 !important;
+			color: white !important;
+			/*text-align: center;*/
+			font-size: 18px;
+			font-weight: bold;
+		}
+		.ajs-ok{
+			color: #fff;
+		    background-color: #007bff;
+		    border-color: #007bff;
+		}
+		.ajs-cancel{
+			color: #fff;
+		    background-color: #dc3545;
+		    border-color: #dc3545;
+		}
+		#esto{
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+		.table tr:hover{
+			opacity: 0.68;
+			border: 2px;
+		}
+	</style>
 </head>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-<link rel="stylesheet" th:href="@{/resources/CSS/estilo.css}">
+	
 <body>
 	<div th:insert="plantilla/UITemplate :: cabecera"></div>
-    <div class="cuerpo-diario">
-        <h1>Libro Diario</h1>
-        <div class="formulario-diario">
-            <div class="formulario-1">
-                <form action="/LibroDiario/registroDetalle" method="post">
-                    <div class="sele sepa">
-                        <p>Fecha:</p>
-                        <input type="date" name="fecha">
-                    </div>
-                    <div class="radio-box sepa">
-                         <select name="detalle">
-                         <option value="">[Selecione un detalle]</option>
-                         <option th:each="frijol:${detalles}"
-					  	th:utext="${frijol.detalle}"
-					  	th:value="${frijol.coddetalle}"
-					  /></select>
-                    </div>
-                     <div class="sele sepa"><p >Sub-Descripcion</p><input type="text" name="importe"></div>
-                   <div class="sele sepa"><p >Monto:</p><input type="text"  name="monto"></div>
-                    <div class="radio-box sepa">
-                         <select name="tipo">
-                         <option value="">[Selecione un tipo]</option>
-                         <option th:each="row:${tipos}"
-					  	th:utext="${row.descripcion}"
-					  	th:value="${row.codtipo}"
-					  /></select>
-                    </div>
-                    <div class="botones">
-                        <input class="boton-style-1" type="submit">
-                        <button class="boton-style-1" type="reset">Limpiar</button>
-                    </div>
-                </form>
-            </div>
-         
-        </div>
-        <div class="cuerpo-listar">
-            <form action="/LibroDiario/listarLibro">
-                <input type="date" name="date">
-                <input type="submit" value="buscar">
-            </form>
-            <table border="2" border-collapse="collapse">
-            	<tr>
-            		<td>Empresa</td>
-            		<td >Detalle</td>
-            		<td>Importe Parcial</td>
-            		<td>Monto</td>
-            		<td>Fecha</td>
-            	</tr>
-            	<tr th:each="bean:${registros}">
-            		<td th:text="${bean.empresa.nomempresa}"></td>
-            		<td th:text="${bean.detalle.detalle}"></td>
-            		<td th:text="${bean.importe}"></td>
-            		<td th:text="${bean.monto}"></td>
-            		<td th:text="${bean.fecha}"></td>
-            	</tr>
-            </table>
-        </div>
-    </div>
+	<div class="container">
+		<h1 class="text-center">LIBRO DIARIO</h1>
+	  	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalMedicamento">
+	  		Nuevo Registro
+	  	</button>
+	  	
+	  	<!-- Modal PARA REGISTRAR-->
+		<div class="modal fade" id="modalMedicamento" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered modal-lg">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="staticBackdropLabel">Libro diario - Formulario</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+		        <form id="formDocente" action="/LibroDiario/registroDetalle" method="post" class="row g-3">
+		          <input type="hidden" class="form-control" name="codigo" id="idCodigo" value="0">
+				  <div class="form-group col-md-6">
+				    <label for="validationCustomUsername" class="form-label fw-bold">Detalle</label>
+				    <div class="input-group has-validation">
+				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-prescription2"></i></span>
+				      <select class="form-select form-control" name="detalle" id="idDetalle">
+					  <option value=" ">[Seleccione detalle]</option>
+													      <option th:each="bean:${detalles}" 
+													      		  th:utext="${bean.detalle}"
+													      		  th:value="${bean.coddetalle}"/>
+					</select>
+				    </div>
+				  </div>
+				  <div class="form-group col-6">
+				    <label for="validationCustomUsername" class="form-label fw-bold">Sub-Descipción</label>
+				    <div class="input-group has-validation">
+				      <textarea class="form-control" id="idImporte" rows="6" name="importe" 
+																					   placeholder="Ingresar descripción" style="padding-left: 5px!important;"></textarea>
+				    </div>
+				  </div>	
+				  <div class="form-group col-md-4">
+				    <label for="validationCustomUsername" class="form-label fw-bold">Fecha Vencimiento</label>
+				    <div class="input-group has-validation">
+				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-calendar-date"></i></span>
+				      <i class="fas fa-calendar-week form-control-feedback2"></i>
+					    <input type="text" style="background-color:#aed6f1" class="form-control" id="usr1"
+					    													  name="fecha" placeholder="YYYY-MM-DD" autocomplete="off" >
+							
+				    </div>
+				  </div>
+				  <div class="form-group col-md-4">
+				    <label for="validationCustomUsername" class="form-label fw-bold">Monto</label>
+				    <div class="input-group has-validation">
+				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-bank2"></i></span>
+				      <input type="text" class="form-control" name="monto" id="idMonto">
+				    </div>
+				  </div>
+				  <div class="form-group col-md-4">
+				    <label for="validationCustomUsername" class="form-label fw-bold">Tipo</label>
+				    <div class="input-group has-validation">
+				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-prescription2"></i></span>
+				      <select class="form-select form-control" name="tipo" id="idTipo">
+					  <option value=" ">[Seleccione un tipo]</option>
+													      <option th:each="bean:${tipos}" 
+													      		  th:utext="${bean.descripcion}"
+													      		  th:value="${bean.codtipo}"/>
+					</select>
+				    </div>
+				  </div>
+				  <div class="modal-footer">
+			      	<button type="submit" class="btn btn-primary"><i class="bi bi-save2"></i> Grabar</button>
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-circle-fill"></i> Cerrar</button>
+			      </div>
+				</form>
+		      </div>
+		    </div>
+		  </div>
+		  </div>
+		  
+		  <div class="mt-5">
+		  <table id="tableDocente" class="table table-striped table-info" style="width:100%">
+	        <thead class="table-light">
+			   <tr>
+	                <th>Empresa</th>
+	                <th>Detalle</th>
+	                <th>Importe Parcial</th>
+	                <th>Monto</th>
+	                <th>Fecha</th>
+	                <th>Tipo</th>
+	                <th></th>
+	                <th></th>
+	            </tr>
+		    </thead>
+		    <tbody>
+				<tr th:each="row:${registros}">
+			      <td th:text="${row.empresa.nomempresa}"></td>
+			      <td th:text="${row.detalle.detalle}"></td>
+			      <td th:text="${row.importe}"></td>
+			      <td th:text="${row.monto}"></td>
+			      <td th:text="${row.fecha}"></td>
+			      <td id="esto" th:text="${row.tipo.descripcion}"></td>
+			      <td><a class="btn btn-info btn-editar" data-bs-toggle="modal" data-bs-target="#modalMedicamento"><i class="bi bi-pencil"></i></a></td>
+			      <td><a class="btn btn-danger btn-eliminar"><i class="bi bi-trash-fill"></i></a></td>
+			    </tr>  
+			</tbody>
+	      </table>
+		  </div>
+	</div>
 </body>
+	<!-- JS principal -->
+	<script th:src="@{/resources/js/jquery-3.5.1.js}"></script>
 
+	<!-- Option 1: Bootstrap Bundle with Popper -->
+    <script th:src="@{/resources/js/bootstrap.bundle.min.js}"></script>
+
+	<!-- JS para la tabla -->
+	<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+
+	<!--JS para validar  -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
+	
+	<!--JS para Calendario  -->
+	<script th:src="@{/resources/datepicker/bootstrap-datepicker.js}"></script> 
+	
+	<script	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+	
+	<script th:src="@{/resources/alertifyjs/alertify.js}"></script>
+	<script th:src="@{/resources/alertifyjs/alertify.min.js}"></script>
+	
+	<script th:inline="javascript" th:if="${MENSAJE!=null}">
+		let msj;
+		msj=/*[[${MENSAJE}]]*/
+		toastr.success(msj, toastr.options = {
+			"timeOut": "2000",
+			"positionClass " : " toast-top-right ",
+		});
+	</script>
+	
+	<script>
+		$(function() {
+			$('#usr1').datepicker({
+				'format': 'yyyy-mm-dd',
+				'autoclose': true
+			});
+		});	
+		
+		//asignar evento click a todos los botones con nombre de clase "btn-editar"
+		$(document).on("click",".btn-editar",function(){
+			//leer la columna código de la fila actual según el botón que se hizo click
+			let cod;
+			cod=$(this).parents("tr").find("td")[0].innerHTML;
+			//get
+			$.get("buscar?codigo="+cod,function(response){
+				//console.log(response);
+				$("#idCodigo").val(response.codigo);
+				$("#idDetalle").val(response.detalle);
+				$("#idImporte").val(response.descripcion);
+				$("#usr1").val(response.precio);
+				$("#idMonto").val(response.stock);
+				$("#idTipo").val(response.tipo.laboratorio.codigo);
+			})
+		})
+		//asignar evento click a todos los botones con nombre de clase "btn-editar"
+		$(document).on("click",".btn-eliminar",function(){
+			//leer la columna código de la fila actual según el botón que se hizo click
+			let cod;
+			cod=$(this).parents("tr").find("td")[0].innerHTML;
+			alertify.confirm("This is a confirm dialog.",
+			  function(){
+				window.location="eliminar?codigo="+cod;
+			  },
+			  function(){
+			    alertify.error('Cancel');
+			  });
+		})
+	</script>
+	
+	<script>
+		$(document).ready(function () {
+		    $('#tableDocente').DataTable();
+		    //validación
+		    $('#formDocente').bootstrapValidator({      
+	        	 fields:{
+	        		 	nombre:{
+	        		 		validators:{
+	        		 			notEmpty:{
+	        		 				message:'Campo nombre es obligatorio'
+	        		 			}
+	        		 		}
+	        		 	},
+	        		 	descripcion:{
+	        		 		validators:{
+	        		 			notEmpty:{
+	        		 				message:'Campo descripción es obligatorio'
+	        		 			}
+	        		 		}
+	        		 	},
+	        		 	stock:{
+	        		 		validators:{
+	        		 			notEmpty:{
+	        		 				message:'Campo materno es obligatorio'
+	        		 			}
+	        		 		}
+	        		 	},
+	        		 	precio:{
+	        		 		validators:{
+	        		 			notEmpty:{
+	        		 				message:'Campo hijos es obligatorio'
+	        		 			}
+	        		 		}
+	        		 	},
+	        		 	tipo:{
+	        		 		validators:{
+	        		 			notEmpty:{
+	        		 				message:'Campo tipo es obligatorio'
+	        		 			}
+	        		 		}
+	        		 	},
+	        		 	fecha: {
+		     	    		//selector:'#usr1',   
+		                    validators: {    
+		                        notEmpty: {    
+		                            message: 'Seleccione fecha '    
+		                        },
+		                        date: {
+		                            format: 'YYYY-MM-DD',
+		                            message: 'The format is dd/mm/yyyy'
+		                        },
+		                    }    
+		                },
+	        	 }
+	        })
+	        $('#usr1').on('changeDate', function(e) {	
+				$('#formDocente').data('bootstrapValidator').updateStatus('fecha', 'VALIDATED');
+			})
+		    $('#modalMedicamento')
+	        .on('hidden.bs.modal',function(){
+				$("#formDocente").bootstrapValidator('resetForm',true);
+			})
+		});
+	</script>
 </html>
