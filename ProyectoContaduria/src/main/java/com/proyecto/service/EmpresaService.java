@@ -24,4 +24,9 @@ public class EmpresaService {
 	public List<Empresa> listar(){
 		return repo.findAll();
 	}
+	
+	public Empresa buscar(int cod) {
+		return repo.findById(cod).orElse(null);
+	}
+	
 }

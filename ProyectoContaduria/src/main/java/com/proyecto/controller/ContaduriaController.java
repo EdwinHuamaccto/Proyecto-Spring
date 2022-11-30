@@ -1,6 +1,5 @@
 package com.proyecto.controller;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +15,15 @@ import com.proyecto.entity.Empresa;
 import com.proyecto.entity.LibroDiario;
 import com.proyecto.entity.Tipo;
 import com.proyecto.service.DetalleService;
+import com.proyecto.service.EmpresaService;
 import com.proyecto.service.LibroService;
 import com.proyecto.service.TipoService;
 
 @Controller
 @RequestMapping("/LibroDiario")
 public class ContaduriaController {
-
+	@Autowired
+	private EmpresaService serviceEmp;
 	@Autowired
 	private TipoService serviceTipo;
 	@Autowired
@@ -32,6 +33,7 @@ public class ContaduriaController {
 	
 	@RequestMapping("/lista")
 	public String inicio(Model model) {
+		model.addAttribute("empresas", serviceEmp.listar());
 		model.addAttribute("tipos",serviceTipo.listar());
 	    model.addAttribute("detalles", serviceDetalle.listar());
 	    model.addAttribute("registros", serviceLibro.listar());
@@ -76,18 +78,6 @@ public class ContaduriaController {
 		}
 		return "redirect:/LibroDiario/lista";
 	}
-	@RequestMapping("/listarLibro")
-	public String listaLibro(@RequestParam("date") String date,
-							 Model model) {
-		try {
-			model.addAttribute("registro", 
-					serviceLibro.buscarPorFecha(new SimpleDateFormat("yyyy-MM-dd").parse(date)));
-			
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return "redirect:/LibroDiario/lista";
-	}
 	
 	@RequestMapping("/buscar")
 	@ResponseBody
@@ -101,12 +91,11 @@ public class ContaduriaController {
 	public String eliminar(@RequestParam("codigo") int cod,RedirectAttributes redirect) {
 		try {
 			serviceLibro.eliminar(cod);
-			redirect.addFlashAttribute("MENSAJE","Medicamento eliminado");
+			redirect.addFlashAttribute("MENSAJE","Registro eliminado");
 		} catch (Exception e) {
 			redirect.addFlashAttribute("MENSAJE","Error en la eliminación");
 			e.printStackTrace();
 		}
-		
 		return "redirect:/LibroDiario/lista";
 	}
 }

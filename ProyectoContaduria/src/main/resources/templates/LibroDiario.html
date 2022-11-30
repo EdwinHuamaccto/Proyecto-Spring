@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -100,10 +100,10 @@
 				    </div>
 				  </div>
 				  <div class="form-group col-6">
-				    <label for="validationCustomUsername" class="form-label fw-bold">Sub-Descipción</label>
+				    <label for="validationCustomUsername" class="form-label fw-bold">Sub-Descripción</label>
 				    <div class="input-group has-validation">
-				      <textarea class="form-control" id="idImporte" rows="6" name="importe" 
-																					   placeholder="Ingresar descripción" style="padding-left: 5px!important;"></textarea>
+				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-bank2"></i></span>
+					  <input type="text" class="form-control" name="importe" id="idImporte">																			
 				    </div>
 				  </div>	
 				  <div class="form-group col-md-4">
@@ -135,6 +135,18 @@
 					</select>
 				    </div>
 				  </div>
+				  <div class="form-group col-md-4">
+				    <label for="validationCustomUsername" class="form-label fw-bold">Empresa</label>
+				    <div class="input-group has-validation">
+				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-prescription2"></i></span>
+				      <select class="form-select form-control" name="empresa" id="idEmpresa">
+					  <option value=" ">[Seleccione empresa]</option>
+													      <option th:each="bean:${empresas}" 
+													      		  th:utext="${bean.nomempresa}"
+													      		  th:value="${bean.codempresa}"/>
+					</select>
+				    </div>
+				  </div>
 				  <div class="modal-footer">
 			      	<button type="submit" class="btn btn-primary"><i class="bi bi-save2"></i> Grabar</button>
 			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-circle-fill"></i> Cerrar</button>
@@ -149,6 +161,7 @@
 		  <table id="tableDocente" class="table table-striped table-info" style="width:100%">
 	        <thead class="table-light">
 			   <tr>
+			   		<th>Código</th>
 	                <th>Empresa</th>
 	                <th>Detalle</th>
 	                <th>Importe Parcial</th>
@@ -161,6 +174,7 @@
 		    </thead>
 		    <tbody>
 				<tr th:each="row:${registros}">
+				  <td th:text="${row.codigo}"></td>
 			      <td th:text="${row.empresa.nomempresa}"></td>
 			      <td th:text="${row.detalle.detalle}"></td>
 			      <td th:text="${row.importe}"></td>
@@ -172,7 +186,7 @@
 			    </tr>  
 			</tbody>
 	      </table>
-		  </div>
+	      </div>
 	</div>
 </body>
 	<!-- JS principal -->
@@ -211,6 +225,13 @@
 				'format': 'yyyy-mm-dd',
 				'autoclose': true
 			});
+		});
+		
+		$(function() {
+			$('#filtro').datepicker({
+				'format': 'yyyy-mm-dd',
+				'autoclose': true
+			});
 		});	
 		
 		//asignar evento click a todos los botones con nombre de clase "btn-editar"
@@ -222,24 +243,25 @@
 			$.get("buscar?codigo="+cod,function(response){
 				//console.log(response);
 				$("#idCodigo").val(response.codigo);
-				$("#idDetalle").val(response.detalle);
-				$("#idImporte").val(response.descripcion);
-				$("#usr1").val(response.precio);
-				$("#idMonto").val(response.stock);
-				$("#idTipo").val(response.tipo.laboratorio.codigo);
+				$("#idDetalle").val(response.detalle.coddetalle);
+				$("#idImporte").val(response.importe);
+				$("#usr1").val(response.fecha);
+				$("#idMonto").val(response.monto);
+				$("#idEmpresa").val(response.empresa.codempresa);
+				$("#idTipo").val(response.tipo.codtipo);
 			})
 		})
-		//asignar evento click a todos los botones con nombre de clase "btn-editar"
+		//asignar evento click a todos los botones con nombre de clase "btn-eliminar"
 		$(document).on("click",".btn-eliminar",function(){
 			//leer la columna código de la fila actual según el botón que se hizo click
 			let cod;
 			cod=$(this).parents("tr").find("td")[0].innerHTML;
-			alertify.confirm("This is a confirm dialog.",
+			alertify.confirm("¿Eliminar registro?",
 			  function(){
 				window.location="eliminar?codigo="+cod;
 			  },
 			  function(){
-			    alertify.error('Cancel');
+			    alertify.error('Ah, OK');
 			  });
 		})
 	</script>

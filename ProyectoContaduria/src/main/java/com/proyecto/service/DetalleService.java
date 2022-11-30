@@ -16,4 +16,16 @@ public class DetalleService {
 	public List<Detalle> listar(){
 		return repo.findAll();
 	}
+	
+	public Detalle buscar(int cod) {
+		return repo.findById(cod).orElse(null);
+	}
+	
+	public void registrar(Detalle obj) {
+		repo.save(obj);
+	}
+	
+	public void borrar(int cod) {
+		repo.deleteById(cod);
+	}
 }

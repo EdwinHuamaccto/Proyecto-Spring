@@ -17,12 +17,18 @@ public class SecurityConfig {
 	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.csrf(csrf->csrf.disable())
-		.authorizeHttpRequests((auth)->{
-			auth.antMatchers("/LibroDiario").hasRole("Administrador");
-		auth.anyRequest().authenticated();})
-		.formLogin(form->form.loginPage("/login")
-				.permitAll().defaultSuccessUrl("/menu"));
+		/*
+		 * http.csrf(csrf->csrf.disable()) .authorizeHttpRequests((auth)->{
+		 * auth.antMatchers("/LibroDiario/lista","/resources/**").permitAll();
+		 * auth.anyRequest().authenticated();}) .formLogin(form->
+		 * form.loginPage("/login") .permitAll().defaultSuccessUrl("/menu"));
+		 */
+		http.authorizeRequests()
+		.antMatchers("/LibroDiario/lista","/resources/**").permitAll()
+		.anyRequest().authenticated()
+		.and().formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/menu")
+		.and().logout().permitAll();
+		
 		return http.build();
 	}
 }

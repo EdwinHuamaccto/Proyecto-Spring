@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,20 +12,16 @@
 </head>
 <body class="body_login">
     <div class="contenedor_login">
+		<div style="background-color: red;color: white">[[${error}]]</div>
+		<div style="background-color: green;color: white">[[${success}]]</div>
         <h1>Bienvenido</h1>
         <form th:action="@{/login}" method="post">
-            <input class="form_login" name="username" type="text" placeholder="Usuario">
-            <input class="form_login" name="password" type="password" placeholder="Password">
-            <input class="boton_login" type="submit" value="Ingresar" >
+            <input class="form_login" name="username" type="text" placeholder="Usuario" required>
+            <input class="form_login" name="password" type="password" placeholder="Contraseña" required>
+            <input class="boton_login" type="submit" value="Ingresar">
             
         </form>
-        <div class="opciones_login">
-            <a href="">¿Perdiste tu contraseña?</a>
-            <a href="">¿No tienes Cuenta ? Registrate</a>
-        </div>
-
     </div>
-    <a href="Index.html">hola</a>
 </body>
 
 </html>
