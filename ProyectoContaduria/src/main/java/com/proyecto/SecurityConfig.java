@@ -25,8 +25,14 @@ public class SecurityConfig {
 		 */
 		http.authorizeRequests()
 		.antMatchers("/LibroDiario/lista","/resources/**").permitAll()
+		.antMatchers("/mantemiento/buscarEmpresa").permitAll()
+		.antMatchers("/mantemiento/eliminarEmpresa").permitAll()
+		.antMatchers("/mantemiento/empresa").permitAll()
+		.antMatchers("/mantemiento/buscarDetalle").permitAll()
+		.antMatchers("/mantemiento/eliminarDetalle").permitAll()
+		.antMatchers("/mantemiento/detalle").permitAll()
 		.anyRequest().authenticated()
-		.and().formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/menu")
+		.and().formLogin().loginPage("/login").permitAll()
 		.and().logout().permitAll();
 		
 		return http.build();

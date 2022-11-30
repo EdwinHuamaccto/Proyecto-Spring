@@ -29,7 +29,7 @@
 				</div>
 				<div>
 					<center>
-						<form action="/mantenimiento/empresa" method="post">
+						<form th:action="@{/mantenimiento/empresa}" method="post">
 							<div class="form-group">
 								<label class="control-label">Código de la empresa</label>
 								<input id="idCodigo" class="tamano" name="codigo" value="0" readonly>
@@ -55,7 +55,6 @@
 				   		<th>Código Empresa</th>
 		                <th>Nombre Empresa</th>
 		                <th></th>
-		                <th></th>
 		            </tr>
 			    </thead>
 			    <tbody>
@@ -63,7 +62,6 @@
 					  <td th:text="${row.codempresa}"></td>
 				      <td th:text="${row.nomempresa}"></td>
 				      <td class="option"><a class="btn btn-info btn-editar" data-bs-toggle="modal" data-bs-target="#modalMedicamento">Seleccionar</a></td>
-				      <td><a class="btn btn-danger btn-eliminar">Eliminar</a></td>
 				    </tr>  
 				</tbody>
 		      </table>
@@ -77,14 +75,6 @@
 <script th:src="@{/resources/alertifyjs/alertify.js}"></script>
 <script th:src="@{/resources/alertifyjs/alertify.min.js}"></script>
 
-<script th:inline="javascript" th:if="${MENSAJE!=null}">
-	let msj;
-	msj=/*[[${MENSAJE}]]*/
-	toastr.success(msj, toastr.options = {
-		"timeOut": "2000",
-		"positionClass " : " toast-top-right ",
-	});
-</script>
 <script>
 	//asignar evento click a todos los botones con nombre de clase "btn-editar"
 	$(document).on("click",".btn-editar",function(){

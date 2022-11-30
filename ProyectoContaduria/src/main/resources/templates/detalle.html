@@ -29,7 +29,7 @@
 				</div>
 				<div>
 					<center>
-						<form action="/mantenimiento/detalle" method="post">
+						<form th:action="@{/mantenimiento/detalle}" method="post">
 							<div class="form-group">
 								<label class="control-label">Código del detalle</label>
 								<input id="idCodigo" class="tamano" name="codigo" value="0" readonly>
@@ -52,9 +52,8 @@
 			  <table id="tableDocente" class="table table-striped table-info" style="width:100%">
 		        <thead>
 				   <tr>
-				   		<th>Código</th>
-		                <th>Nombre</th>
-		                <th></th>
+				   		<th>Código Detalle</th>
+		                <th>Nombre Detalle</th>
 		                <th></th>
 		            </tr>
 			    </thead>
@@ -63,7 +62,6 @@
 					  <td th:text="${row.coddetalle}"></td>
 				      <td th:text="${row.detalle}"></td>
 				      <td class="option"><a class="btn btn-info btn-editar" data-bs-toggle="modal" data-bs-target="#modalMedicamento">Seleccionar</a></td>
-				      <td><a class="btn btn-danger btn-eliminar">Eliminar</a></td>
 				    </tr>  
 				</tbody>
 		      </table>
@@ -92,14 +90,6 @@
 	<script th:src="@{/resources/alertifyjs/alertify.js}"></script>
 	<script th:src="@{/resources/alertifyjs/alertify.min.js}"></script>
 	
-<script th:inline="javascript" th:if="${MENSAJE!=null}">
-	let msj;
-	msj=/*[[${MENSAJE}]]*/
-	toastr.success(msj, toastr.options = {
-		"timeOut": "2000",
-		"positionClass " : " toast-top-right ",
-	});
-</script>
 <script>
 	//asignar evento click a todos los botones con nombre de clase "btn-editar"
 	$(document).on("click",".btn-editar",function(){
